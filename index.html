@@ -1,0 +1,119 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generatore URL</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+
+        #risultato, #numero, button {
+            color: white;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        #risultato {
+            margin-bottom: 20px;
+        }
+
+        #numero {
+            padding: 20px;
+            font-size: 2em;
+            color: black;
+            background-color: white;
+            border: 2px solid #4F4F4F;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            width: 500px; /* Aumentato per essere più largo */
+        }
+
+        button {
+            padding: 20px 40px;
+            margin-top: 30px;
+            border-radius: 5px;
+            background-color: #6E6E6E; /* Grigio */
+            font-size: 2em;
+            cursor: pointer;
+            width: 400px; /* Aumentato per essere più largo */
+        }
+
+        button:hover {
+            background-color: #8C8C8C; /* Grigio più chiaro al passaggio del mouse */
+        }
+    </style>
+</head>
+<body>
+    <h1>Random link generator</h1>
+    <a id="risultato" href="#" target="_blank"></a>
+    <input type="number" id="numero" min="400000" max="1000000" placeholder="[400000 - 1000000]">
+    <button onclick="generaUrl()">Generate</button>
+
+    <script>
+
+        
+        function numeroInEsadecimale(numero) {
+            return numero.toString(16);
+        }
+
+        function esadecimaleInumero(esa) {
+            return parseInt(esa,16);//.toString(16);
+        }
+
+
+        function orarioCorrenteInEsadecimale() {
+            let data = new Date();
+            data.setMinutes(data.getMinutes() + 10);
+            let ore = data.getHours().toString(16).padStart(2, '0');
+            let minuti = data.getMinutes().toString(16).padStart(2, '0');
+            let secondi = data.getSeconds().toString(16).padStart(2, '0');
+            return ore + minuti + secondi;
+        }
+
+function getDatePlus10Minutes() {
+    let date = new Date();
+    date.setMinutes(date.getMinutes() + 10);
+    return date;
+}
+
+console.log(getDatePlus10Minutes());
+        function generaUrl() {
+            const numeroInput = document.getElementById('numero');
+            const numero = parseInt(numeroInput.value);
+
+            if (numero >= 400000 && numero <= 1000000) {
+                // Funzione per convertire un numero in una stringa di lettere
+                function numeroALettere(num) {
+                    const lettere = "ABCDEFGHIJ";
+                    return lettere.charAt(num % 10);
+                }
+                const data =orarioCorrenteInEsadecimale();
+                // Genera la parte variabile dell'URL
+                const parteVariabile = numeroInEsadecimale(numero);
+                // Costruisce l'URL completa
+                const urlCompleta = "https://random-numbers-hazel.vercel.app/?format=" + parteVariabile +"&size="+data;
+
+                // Mostra l'URL nella pagina
+                document.getElementById('risultato').href = urlCompleta;
+                document.getElementById('risultato').textContent = urlCompleta;
+            } else {
+                alert("Wrong range number");
+            }
+        }
+    </script>
+</body>
+</html>
