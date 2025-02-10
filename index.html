@@ -74,7 +74,24 @@
             return parseInt(esa,16);//.toString(16);
         }
 
+function dateToHex() {
 
+    let date = new Date();
+    date.setMinutes(date.getMinutes() + 10); 
+
+    const year = date.getFullYear() - 2000; 
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    
+    // Codifica i valori in un numero intero
+    let num = (year << 26) | (month << 22) | (day << 17) | (hours << 12) | (minutes << 6) | seconds;
+    
+    // Converte in esadecimale
+    return num.toString(16).toUpperCase();
+}
         function orarioCorrenteInEsadecimale() {
             let data = new Date();
             data.setMinutes(data.getMinutes() + 10);
@@ -90,7 +107,7 @@ function getDatePlus10Minutes() {
     return date;
 }
 
-console.log(getDatePlus10Minutes());
+
         function generaUrl() {
             const numeroInput = document.getElementById('numero');
             const numero = parseInt(numeroInput.value);
@@ -101,7 +118,7 @@ console.log(getDatePlus10Minutes());
                     const lettere = "ABCDEFGHIJ";
                     return lettere.charAt(num % 10);
                 }
-                const data =orarioCorrenteInEsadecimale();
+                const data = dateToHex();
                 // Genera la parte variabile dell'URL
                 const parteVariabile = numeroInEsadecimale(numero);
                 // Costruisce l'URL completa
